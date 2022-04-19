@@ -1,0 +1,31 @@
+Criteria
+- lowercase "abcdefghijklmnopqrstuvwxyz"
+- uppercase "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+- numeric "0123456789"
+- special characters " !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"
+
+User Journey
+
+User clicks on button
+User will be presented with a prompt to enter length of password (10)
+User will be presented with a confirm for lowercase (true)
+User will be presented with a confirm for uppercase (true)
+User will be presented with a confirm for numeric (true)
+User will be presented with a confirm for special characters (true)
+User will see the password on the page
+
+
+Rules
+- Password length (len >= 8 < 128)
+- From all of the confirms at least one should be true
+
+File Structure
+
+|_README.md
+|_.gitignore
+|_index.html
+|_assets
+  |_css
+  | |_style.css
+  |_js
+    |_script.js
