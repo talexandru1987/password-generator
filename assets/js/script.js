@@ -2,7 +2,44 @@
 const generateBtn = document.querySelector("#generate");
 
 const getPasswordLength = () => {
-  return 10;
+  // prompt the user with the pass length question
+  let passwordLength = prompt("Please enter a password length starting from 8 to 128");
+
+  // initialize loop variables
+  let confirmMe = false;//retry confirm variable
+  let counter = 0; // loop count variable
+
+  // loop to validate the pass length
+  while((passwordLength < 8 && counter < 5) || (passwordLength > 128 && counter < 5)){
+    //increment counter
+    counter += 1;
+
+    //check if number of retry was exceeded, 5 is max
+    if (counter === 5){
+      alert("Retry count exceeded! Generator Terminated!")
+
+      // return invalid length -1 to trigger stop generator execution later
+      return -1;
+    }else {
+        // ask user if retry or cancel
+        confirmMe = confirm("Incorrect password length! Try again or stop?")
+        
+        if (confirmMe){
+          // ask for the length
+          passwordLength = prompt("Please enter a password length starting from 8 to 128");
+
+        }else{
+          //break the loop if cancel
+          alert("Generator Session Terminated!")
+
+          // return invalid length -1 to trigger stop generator execution later
+           return -1;
+           
+        }
+    }
+  }
+    return passwordLength;
+    
 };
 
 const getPasswordCriteria = () => {
