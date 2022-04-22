@@ -1,6 +1,52 @@
 // Assignment Code
 const generateBtn = document.querySelector("#generate");
 
+// generate the list containing the final password criteria
+function criteriaGenerator (){
+    // object containing the criteria questions confirmation
+    const confirmObj = { 
+
+    lowercase: confirm("Would you like to include lowercase letters?"),
+
+    uppercase: confirm("Would you like to include uppercase letters?"),
+
+    numbers: confirm("Would you like to include numbers?"),
+
+    specialChar: confirm("Would you like to include special characters?")
+
+  };
+  // initialize the list of criteria
+  let finalCriteria = [];
+  
+  //iterate over the object keys and values
+  for (const [key, value] of Object.entries(confirmObj)) {
+    console.log(`${key}: ${value}`);
+    
+    //if one value confirmed add the relevant criteria to the list
+    if(key === "lowercase" && value){
+
+      finalCriteria.push("abcdefghijklmnopqrstuvwxyz");
+
+    }else if (key === "uppercase" && value){
+
+      finalCriteria.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    }else if (key === "numbers" && value) {
+
+      finalCriteria.push("0123456789");
+
+    }else if (key === "specialChar" && value) {
+
+      finalCriteria.push(" !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~");
+
+    }
+
+  };
+
+  return finalCriteria;
+
+}
+
 const getPasswordLength = () => {
   // prompt the user with the pass length question
   let passwordLength = prompt("Please enter a password length starting from 8 to 128");
@@ -44,73 +90,55 @@ const getPasswordLength = () => {
     
 };
 
+
 const getPasswordCriteria = () => {
 
-  
- // generate the list containing the final password criteria
-  let criteriaGenerator = (obj1) => {
-    
-    // initialize the list of criteria
-    let finalCriteria = [];
-    
-    //iterate over the object keys and values
-    for (const [key, value] of Object.entries(obj1)) {
-      console.log(`${key}: ${value}`);
-      
-      //if one value confirmed add the relevant criteria to the list
-      if(key === "lowercase" && value){
-  
-        finalCriteria.push("abcdefghijklmnopqrstuvwxyz");
-  
-      }else if (key === "uppercase" && value){
-  
-        finalCriteria.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-  
-      }else if (key === "numbers" && value) {
-  
-        finalCriteria.push("0123456789");
-  
-      }else if (key === "specialChar" && value) {
-  
-        finalCriteria.push(" !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~");
-  
-      }
-  
-    };
-
-    return finalCriteria;
-
-  }
-
-  // object containing the criteria questions confirmation
-  const confirmObj = { 
-
-    lowercase: confirm("Would you like to include lowercase letters?"),
-
-    uppercase: confirm("Would you like to include uppercase letters?"),
-
-    numbers: confirm("Would you like to include numbers?"),
-
-    specialChar: confirm("Would you like to include special characters?")
-
-  };
-
   // generate the criteria
-   let returnCriteria = criteriaGenerator (confirmObj);
+   let returnCriteria = criteriaGenerator();
 
-   console.log(returnCriteria);
+   
+   //if no criteria is selected
+   if (returnCriteria.length === 0){
 
-  
 
-  return [
-    "abcdefghijklmnopqrstuvwxyz",
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    "0123456789",
-    " !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~",
-  ];
+      //initialize loop counter
+      let counter = 0;
+      
+      let useConfirm = false;
+      
+      //loop to help users select new criteria
+      while (returnCriteria.length === 0 && counter < 6) {
+        //increment counter
+        counter += 1;
+
+        //ask user if he want's to retry imputing the password parameters
+        useConfirm = confirm("No password parameters were selected.Do you want to retry?");
+
+        if(useConfirm) {
+
+          //generate new criteria
+          returnCriteria = criteriaGenerator();
+
+        }else{
+
+          alert("Session terminated!");
+          //return an invalid number that will stop the execution
+          return -1;
+        }
+      }
+
+    }else {
+      //return the selected criteria
+      return returnCriteria;
+    }
+
+
 };
 
+
 const createRandomPassword = () => {
+
+
   return "kdUE28(@d0";
 };
 
