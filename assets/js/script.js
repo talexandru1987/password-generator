@@ -20,7 +20,7 @@ function criteriaGenerator (){
   
   //iterate over the object keys and values
   for (const [key, value] of Object.entries(confirmObj)) {
-    console.log(`${key}: ${value}`);
+    
     
     //if one value confirmed add the relevant criteria to the list
     if(key === "lowercase" && value){
@@ -45,6 +45,11 @@ function criteriaGenerator (){
 
   return finalCriteria;
 
+}
+
+//random function
+function random (firstNumber,lastNumber){
+  return Math.floor((Math.random() * lastNumber) + firstNumber);
 }
 
 const getPasswordLength = () => {
@@ -136,10 +141,35 @@ const getPasswordCriteria = () => {
 };
 
 
-const createRandomPassword = () => {
+const createRandomPassword = (length, criteria) => {
+
+  //initialize the loop counter
+  let counter = 0;
+
+  //the final password
+  let password = "";
+  
+  while (counter < length){
+    
+    //increment counter
+    counter += 1;
+
+    //select a random index
+    let randomCriteria = random(0, criteria.length);
+
+    //select the list item and convert to array
+    let passwordCriteria = criteria[randomCriteria].split("");
+
+    //generate a random index from the array
+    let randomCharacter = random(0, passwordCriteria.length);
+
+    //append the character to the final password
+    password = password + passwordCriteria[randomCharacter];
+
+  }
 
 
-  return "kdUE28(@d0";
+  return password;
 };
 
 // main function to generate the random password
