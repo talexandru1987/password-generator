@@ -38,11 +38,70 @@ const getPasswordLength = () => {
         }
     }
   }
+    
     return passwordLength;
+
     
 };
 
 const getPasswordCriteria = () => {
+
+  
+ // generate the list containing the final password criteria
+  let criteriaGenerator = (obj1) => {
+    
+    // initialize the list of criteria
+    let finalCriteria = [];
+    
+    //iterate over the object keys and values
+    for (const [key, value] of Object.entries(obj1)) {
+      console.log(`${key}: ${value}`);
+      
+      //if one value confirmed add the relevant criteria to the list
+      if(key === "lowercase" && value){
+  
+        finalCriteria.push("abcdefghijklmnopqrstuvwxyz");
+  
+      }else if (key === "uppercase" && value){
+  
+        finalCriteria.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  
+      }else if (key === "numbers" && value) {
+  
+        finalCriteria.push("0123456789");
+  
+      }else if (key === "specialChar" && value) {
+  
+        finalCriteria.push(" !\"#$%&'()*+,-./:;<=>?@[]^_`{|}~");
+  
+      }
+  
+    };
+
+    return finalCriteria;
+
+  }
+
+  // object containing the criteria questions confirmation
+  const confirmObj = { 
+
+    lowercase: confirm("Would you like to include lowercase letters?"),
+
+    uppercase: confirm("Would you like to include uppercase letters?"),
+
+    numbers: confirm("Would you like to include numbers?"),
+
+    specialChar: confirm("Would you like to include special characters?")
+
+  };
+
+  // generate the criteria
+   let returnCriteria = criteriaGenerator (confirmObj);
+
+   console.log(returnCriteria);
+
+  
+
   return [
     "abcdefghijklmnopqrstuvwxyz",
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
