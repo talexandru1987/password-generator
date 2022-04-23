@@ -96,47 +96,51 @@ const getPasswordLength = () => {
 };
 
 
-const getPasswordCriteria = () => {
-
-  // generate the criteria
-   let returnCriteria = criteriaGenerator();
-
+const getPasswordCriteria = (aLength) => {
    
-   //if no criteria is selected
-   if (returnCriteria.length === 0){
+  if (aLength != -1){
+    // generate the criteria
+    let returnCriteria = criteriaGenerator();
+
+    
+    //if no criteria is selected
+    if (returnCriteria.length === 0){
 
 
-      //initialize loop counter
-      let counter = 0;
-      
-      let useConfirm = false;
-      
-      //loop to help users select new criteria
-      while (returnCriteria.length === 0 && counter < 6) {
-        //increment counter
-        counter += 1;
+        //initialize loop counter
+        let counter = 0;
+        
+        let useConfirm = false;
+        
+        //loop to help users select new criteria
+        while (returnCriteria.length === 0 && counter < 6) {
+          //increment counter
+          counter += 1;
 
-        //ask user if he want's to retry imputing the password parameters
-        useConfirm = confirm("No password parameters were selected.Do you want to retry?");
+          //ask user if he want's to retry imputing the password parameters
+          useConfirm = confirm("No password parameters were selected.Do you want to retry?");
 
-        if(useConfirm) {
+          if(useConfirm) {
 
-          //generate new criteria
-          returnCriteria = criteriaGenerator();
+            //generate new criteria
+            returnCriteria = criteriaGenerator();
 
-        }else{
+          }else{
 
-          alert("Session terminated!");
-          //return an invalid number that will stop the execution
-          return -1;
+            alert("Session terminated!");
+            //return an invalid number that will stop the execution
+            return -1;
+          }
         }
+
+      }else {
+        //return the selected criteria
+        return returnCriteria;
       }
-
-    }else {
-      //return the selected criteria
-      return returnCriteria;
-    }
-
+  }else{
+    return -1;
+    
+  }
 
 };
 
@@ -148,40 +152,45 @@ const createRandomPassword = (length, criteria) => {
 
   //the final password
   let password = "";
-  
-  while (counter < length){
+    if(length != -1 && criteria != -1){
+      //start the loop to generate the password
+      while (counter < length){
+        
+        //increment counter
+        counter += 1;
+
+        //select a random index
+        let randomCriteria = random(0, criteria.length);
+
+        //select the list item and convert to array
+        let passwordCriteria = criteria[randomCriteria].split("");
+
+        //generate a random index from the array
+        let randomCharacter = random(0, passwordCriteria.length);
+
+        //append the character to the final password
+        password = password + passwordCriteria[randomCharacter];
+
+      }
+    }
+    return password;
     
-    //increment counter
-    counter += 1;
-
-    //select a random index
-    let randomCriteria = random(0, criteria.length);
-
-    //select the list item and convert to array
-    let passwordCriteria = criteria[randomCriteria].split("");
-
-    //generate a random index from the array
-    let randomCharacter = random(0, passwordCriteria.length);
-
-    //append the character to the final password
-    password = password + passwordCriteria[randomCharacter];
-
-  }
-
-
-  return password;
 };
 
 // main function to generate the random password
 const generatePassword = () => {
+
   // get the password length
   const passwordLength = getPasswordLength();
 
+ 
   // get the password criteria
-  const passwordCriteria = getPasswordCriteria();
+  const passwordCriteria = getPasswordCriteria(passwordLength);
+
 
   // create random password
   const password = createRandomPassword(passwordLength, passwordCriteria);
+
 
   return password;
 };
